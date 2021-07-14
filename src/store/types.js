@@ -1,0 +1,2 @@
+export const SELECT_ELEMENT = "SELECT_ELEMENT";
+export const DROP_ELEMENT = "DROP_ELEMENT";

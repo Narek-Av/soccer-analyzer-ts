@@ -1,0 +1,45 @@
+.main-container {
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
+.drop-area {
+  width: 120px;
+  height: 200px;
+  border: 3px dashed transparent;
+  height: 60%;
+}
+
+.main-container.over > .drop-area {
+  border-color: #ccc;
+}
+.drop-area.over {
+  border-color: green;
+}
+.element-card {
+  width: 210px;
+  border: 1px solid #ccc;
+  background-color: #eee;
+  border-radius: 6px;
+  padding: 2.2em 0.8em;
+  height: 60%;
+  box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+.element-card-close {
+  position: absolute;
+  right: 7px;
+  top: 7px;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #ccc;
+  padding: 3px 5px;
+}
+.element-card-close:hover {
+  background-color: rgb(245, 168, 168);
+}
+.element-card:not(:last-child) {
+  margin-right: 1em;
+}

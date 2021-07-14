@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.app-container {
+  width: 90%;
+  margin: 2em auto;
+  padding: 0.8em;
+  display: grid;
+  grid-template-columns: 25% 70%;
+  justify-content: space-between;
+  background-color: #ccc;
+  border-radius: 6px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar-container,
+.main-container {
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 2px 2px 6px rgba(255, 255, 255, 0.24);
+  padding: 4px 5px;
+}
