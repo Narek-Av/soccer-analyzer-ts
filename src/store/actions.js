@@ -1,15 +1,8 @@
-import { SELECT_ELEMENT, DROP_ELEMENT } from "./types";
+import { TOOGLE_ELEMENT } from "./types";
 
-export const selectElement = (id) => {
+export const toggleElement = (id, hide) => {
   return {
-    type: SELECT_ELEMENT,
-    payload: id,
-  };
-};
-
-export const dropElement = (id) => {
-  return {
-    type: DROP_ELEMENT,
-    payload: id,
+    type: TOOGLE_ELEMENT,
+    payload: { id, hide },
   };
 };

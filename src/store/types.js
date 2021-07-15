@@ -1,2 +1,1 @@
-export const SELECT_ELEMENT = "SELECT_ELEMENT";
-export const DROP_ELEMENT = "DROP_ELEMENT";
+export const TOOGLE_ELEMENT = "TOOGLE_ELEMENT";

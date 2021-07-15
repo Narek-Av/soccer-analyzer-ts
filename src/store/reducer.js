@@ -1,29 +1,33 @@
 import dummyLeagues from "../dummyLeagues.json";
-import { SELECT_ELEMENT, DROP_ELEMENT } from "./types";
+import { TOOGLE_ELEMENT } from "./types";
 
 const inistalState = {
   leagues: dummyLeagues,
-  selectedElements: [],
   selectType: "",
 };
 
 const reducer = (state = inistalState, { type, payload }) => {
   switch (type) {
-    case SELECT_ELEMENT:
+    case TOOGLE_ELEMENT:
       let type;
 
       return {
         ...state,
-        selectedElements: [...state.selectedElements, payload],
         leagues: state.leagues.map((el) => {
           const selectedTeam = el.teams.find(({ id }) => id === payload.id);
 
           if (selectedTeam) {
-            type = "team";
+            type = !payload.hide
+              ? (type = state.selectType + "team")
+              : state.selectType === "teamteam"
+              ? (type = "team")
+              : (type = "");
             return {
               ...el,
               teams: el.teams.map((team) =>
-                team.id === selectedTeam.id ? { ...team, selected: true } : team
+                team.id === selectedTeam.id
+                  ? { ...team, selected: !payload.hide }
+                  : team
               ),
             };
           } else {
@@ -32,16 +36,18 @@ const reducer = (state = inistalState, { type, payload }) => {
               if (selectedPlayer) return team;
               selectedPlayer = team.players.find(({ id }) => id === payload.id);
               if (selectedPlayer) {
-                type = "player";
+                type = !payload.hide
+                  ? (type = state.selectType + "player")
+                  : state.selectType === "playerplayer"
+                  ? (type = "player")
+                  : (type = "");
                 return {
                   ...team,
-                  players: team.players.map((player) => {
-                    if (player.id === selectedPlayer.id) {
-                      return { ...player, selected: true };
-                    } else {
-                      return player;
-                    }
-                  }),
+                  players: team.players.map((player) =>
+                    player.id === selectedPlayer.id
+                      ? { ...player, selected: !payload.hide }
+                      : player
+                  ),
                 };
               }
               return team;
@@ -56,13 +62,6 @@ const reducer = (state = inistalState, { type, payload }) => {
           return el;
         }),
         selectType: type,
-      };
-    case DROP_ELEMENT:
-      return {
-        ...state,
-        selectedElements: state.selectedElements.filter(
-          (el) => el.id !== payload
-        ),
       };
     default:
       return state;

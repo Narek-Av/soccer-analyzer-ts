@@ -15,18 +15,24 @@
 .main-container.over > .drop-area {
   border-color: #ccc;
 }
-.drop-area.over {
+.drop-area.over,
+.element-card.over {
   border-color: green;
+  border-width: 2px;
+  border-style: dashed;
 }
 .element-card {
-  width: 210px;
+  width: 240px;
   border: 1px solid #ccc;
   background-color: #eee;
   border-radius: 6px;
-  padding: 2.2em 0.8em;
+  padding: 1.2em 0.8em;
   height: 60%;
   box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.2);
   position: relative;
+}
+.card-name {
+  font-size: 21px;
 }
 .element-card-close {
   position: absolute;
@@ -42,4 +48,25 @@
 }
 .element-card:not(:last-child) {
   margin-right: 1em;
+}
+
+.card-statistic {
+  font-size: 17px;
+  background-color: #ddd;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.27);
+  margin-bottom: 10px;
+  padding: 5px;
+}
+.card-statistic span {
+  font-size: 18px;
+  font-weight: 700;
+}
+[data-stat="big"] span {
+  color: green;
+}
+[data-stat="small"] span {
+  color: red;
+}
+[data-stat="equal"] span {
+  color: orange;
 }

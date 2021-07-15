@@ -65,7 +65,7 @@ export default function Sidebar() {
                           handleDragStart(e, { id, name, players, stats })
                         }
                         className={`${selected ? "selected" : ""}${
-                          selectType === "player" ? " disabled" : ""
+                          selectType.includes("player") ? " disabled" : ""
                         }`}
                         onDragEnd={handleDragEnd}
                         draggable={!selected && selectType !== "player"}
@@ -80,7 +80,7 @@ export default function Sidebar() {
                             key={id}
                             className={`players-item${
                               selected ? " selected" : ""
-                            }${selectType === "team" ? " disabled" : ""}`}
+                            }${selectType.includes("team") ? " disabled" : ""}`}
                             draggable={!selected && selectType !== "team"}
                             onDragStart={(e) =>
                               handleDragStart(e, { id, name, stats })
