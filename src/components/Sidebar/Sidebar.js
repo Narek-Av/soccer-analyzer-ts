@@ -45,7 +45,7 @@ export default function Sidebar() {
             </div>
             {!activeItem.includes(id) && (
               <ul className="teams">
-                {teams.map(({ id, name, players, stats, selected }) => (
+                {teams.map(({ id, name, players, stats, selected, type }) => (
                   <li className="teams-item" key={id}>
                     <div
                       onClick={() =>
@@ -62,7 +62,7 @@ export default function Sidebar() {
                       <DownIcon className="item-header-icon" />
                       <span
                         onDragStart={(e) =>
-                          handleDragStart(e, { id, name, players, stats })
+                          handleDragStart(e, { id, name, players, stats, type })
                         }
                         className={`${selected ? "selected" : ""}${
                           selectType.includes("player") ? " disabled" : ""

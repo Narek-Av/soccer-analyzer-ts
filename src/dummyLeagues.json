@@ -7,19 +7,15 @@
         "id": "l1t1",
         "name": "Fc Juventus",
         "type": "team",
-        "stats": {
-          "Games": { "value": 23 },
-          "Wining": { "value": 17 }
-        },
         "players": [
           {
             "id": "l1t1g1",
             "type": "player",
             "name": "Cristiano Ronaldo",
             "stats": {
-              "Goals": { "value": 30 },
-              "Appearances": { "value": 35 },
-              "Tackle": { "value": 3 }
+              "Goals": 30,
+              "Appearances": 35,
+              "Tackle": 3
             }
           }
         ]
@@ -28,19 +24,15 @@
         "id": "l1t2",
         "name": "A.C. Milan",
         "type": "team",
-        "stats": {
-          "Games": { "value": 23 },
-          "Wining": { "value": 17 }
-        },
         "players": [
           {
             "id": "l1t2g1",
             "type": "player",
             "name": "Zlatan Ibrahimović",
             "stats": {
-              "Goals": { "value": 26 },
-              "Appearances": { "value": 35 },
-              "Tackle": { "value": 5 }
+              "Goals": 26,
+              "Appearances": 35,
+              "Tackle": 5
             }
           }
         ]
@@ -55,19 +47,15 @@
         "id": "l2t1",
         "name": "Manchester United F.C.",
         "type": "team",
-        "stats": {
-          "Games": { "value": 32 },
-          "Wining": { "value": 19 }
-        },
         "players": [
           {
             "id": "l2t1g1",
             "name": "Paul Pogba",
             "type": "player",
             "stats": {
-              "Goals": { "value": 6 },
-              "Appearances": { "value": 44 },
-              "Tackle": { "value": 21 }
+              "Goals": 6,
+              "Appearances": 44,
+              "Tackle": 21
             }
           }
         ]
@@ -76,19 +64,15 @@
         "id": "l2t2",
         "name": "Fc Chelsea",
         "type": "team",
-        "stats": {
-          "Games": { "value": 24 },
-          "Wining": { "value": 13 }
-        },
         "players": [
           {
             "id": "l2t2g1",
             "name": "Mason Mount",
             "type": "player",
             "stats": {
-              "Goals": { "value": 5 },
-              "Appearances": { "value": 22 },
-              "Tackle": { "value": 34 }
+              "Goals": 5,
+              "Appearances": 22,
+              "Tackle": 34
             }
           },
           {
@@ -96,9 +80,9 @@
             "name": "Kai Havertz",
             "type": "player",
             "stats": {
-              "Goals": { "value": 5 },
-              "Appearances": { "value": 34 },
-              "Tackle": { "value": 41 }
+              "Goals": 6,
+              "Appearances": 34,
+              "Tackle": 41
             }
           }
         ]
@@ -107,19 +91,15 @@
         "id": "l2t3",
         "name": "Fc Liverpool",
         "type": "team",
-        "stats": {
-          "Games": { "value": 24 },
-          "Wining": { "value": 14 }
-        },
         "players": [
           {
             "id": "l2t3g1",
             "name": "Mohamed Salah",
             "type": "player",
             "stats": {
-              "Goals": { "value": 16 },
-              "Appearances": { "value": 7 },
-              "Tackle": { "value": 4 }
+              "Goals": 16,
+              "Appearances": 7,
+              "Tackle": 4
             }
           }
         ]

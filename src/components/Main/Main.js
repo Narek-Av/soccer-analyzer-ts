@@ -26,34 +26,55 @@ export default function Main() {
 
     const droppedElement = JSON.parse(e.dataTransfer.getData("type/element"));
 
+    if (droppedElement.type === "team") {
+      droppedElement.stats = {
+        [`Goals Average`]: calculateAverage(droppedElement.players),
+      };
+    }
+
     if (!leftElement) {
       setLeftElement({ ...droppedElement, position: "left" });
     } else if (leftElement && rightElement) {
-      dispatch(toggleElement(rightElement.id, true));
+      dispatch(toggleElement(leftElement.id, true));
+      setLeftElement({ ...rightElement, position: "left" });
       setRightElement({ ...droppedElement, position: "right" });
-      compareStatistics(droppedElement);
+      compareStatistics(rightElement, droppedElement);
     } else {
       setRightElement({ ...droppedElement, position: "right" });
-      compareStatistics(droppedElement);
+      compareStatistics(leftElement, droppedElement);
     }
 
     dispatch(toggleElement(droppedElement.id));
   };
 
-  const compareStatistics = (droppedElement) => {
+  const compareStatistics = (left, right) => {
     let leftStats = {},
       rightStats = {};
-    Object.entries(leftElement.stats).map(([lName, lInfo]) =>
-      Object.entries(droppedElement.stats).map(([rName, rInfo]) => {
-        if (lName === rName && lInfo.value > rInfo.value) {
-          leftStats[lName] = { value: lInfo.value, stat: "big" };
-          rightStats[rName] = { value: rInfo.value, stat: "small" };
-        } else if (lName === rName && lInfo.value < rInfo.value) {
-          leftStats[lName] = { value: lInfo.value, stat: "small" };
-          rightStats[rName] = { value: rInfo.value, stat: "big" };
-        } else if (lName === rName) {
-          leftStats[lName] = { value: lInfo.value, stat: "equal" };
-          rightStats[rName] = { value: rInfo.value, stat: "equal" };
+    Object.entries(left.stats).map(([lName, lValue]) =>
+      Object.entries(right.stats).map(([rName, rValue]) => {
+        if (lName === rName) {
+          let lInfo = lValue;
+          let rInfo = rValue;
+          if (typeof lValue === "number") {
+            lInfo = { value: lValue, stat: "" };
+          }
+
+          if (typeof rValue === "number") {
+            rInfo = { value: rValue, stat: "" };
+          }
+          if (rInfo.value > lInfo.value) {
+            rInfo.stat = "big";
+            lInfo.stat = "small";
+          } else if (rInfo.value < lInfo.value) {
+            rInfo.stat = "small";
+            lInfo.stat = "big";
+          } else {
+            rInfo.stat = "equal";
+            lInfo.stat = "equal";
+          }
+
+          leftStats[lName] = lInfo;
+          rightStats[rName] = rInfo;
         }
         return null;
       })
@@ -65,8 +86,12 @@ export default function Main() {
 
   const renderStats = (stats) => {
     return Object.entries(stats).map(([name, info]) => (
-      <div key={name} data-stat={info.stat} className="card-statistic">
-        {name} : <span>{info.value}</span>
+      <div
+        key={name}
+        data-stat={info.stat ? info.stat : ""}
+        className="card-statistic"
+      >
+        {name} : <span>{info.value ? info.value : info}</span>
       </div>
     ));
   };
@@ -78,6 +103,14 @@ export default function Main() {
       setRightElement();
     }
     dispatch(toggleElement(el.id, true));
+  };
+
+  const calculateAverage = (players) => {
+    const goalsCount = players.reduce((counter, player) => {
+      return counter + player.stats.Goals;
+    }, 0);
+    const average = goalsCount / players.length;
+    return +average.toFixed(2);
   };
 
   const renderCard = (element) => {
