@@ -1,27 +1,29 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toggleElement } from "../../store/actions";
+import { SelectedElement } from "../../store/types";
 
 import "./Main.css";
 
-export default function Main() {
-  const [leftElement, setLeftElement] = useState();
-  const [rightElement, setRightElement] = useState();
+const Main: React.FC = () => {
+  const [leftElement, setLeftElement] = useState<SelectedElement | null>();
+  const [rightElement, setRightElement] = useState<SelectedElement | null>();
 
   const dispatch = useDispatch();
 
-  const handleDragOver = (e) => {
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-    e.target.classList.add("over");
+    const target = e.target as HTMLElement;
+    target.classList.add("over");
     return false;
   };
 
-  const clearOver = (e) => {
-    e.target.classList.remove("over");
+  const clearOver = (e: React.DragEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+    target.classList.remove("over");
   };
 
-  const handleDrop = (e) => {
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     clearOver(e);
 
     const droppedElement = JSON.parse(e.dataTransfer.getData("type/element"));
@@ -35,7 +37,7 @@ export default function Main() {
     if (!leftElement) {
       setLeftElement({ ...droppedElement, position: "left" });
     } else if (leftElement && rightElement) {
-      dispatch(toggleElement(leftElement.id, true));
+      dispatch(toggleElement(leftElement?.id, true));
       setLeftElement({ ...rightElement, position: "left" });
       setRightElement({ ...droppedElement, position: "right" });
       compareStatistics(rightElement, droppedElement);
@@ -44,17 +46,17 @@ export default function Main() {
       compareStatistics(leftElement, droppedElement);
     }
 
-    dispatch(toggleElement(droppedElement.id));
+    dispatch(toggleElement(droppedElement.id, false));
   };
 
-  const compareStatistics = (left, right) => {
-    let leftStats = {},
-      rightStats = {};
+  const compareStatistics = (left: SelectedElement, right: SelectedElement) => {
+    let leftStats: any = {},
+      rightStats: any = {};
     Object.entries(left.stats).map(([lName, lValue]) =>
       Object.entries(right.stats).map(([rName, rValue]) => {
         if (lName === rName) {
-          let lInfo = lValue;
-          let rInfo = rValue;
+          let lInfo: any = lValue;
+          let rInfo: any = rValue;
           if (typeof lValue === "number") {
             lInfo = { value: lValue, stat: "" };
           }
@@ -80,12 +82,12 @@ export default function Main() {
       })
     );
 
-    setLeftElement((lEl) => ({ ...lEl, stats: leftStats }));
-    setRightElement((rEl) => ({ ...rEl, stats: rightStats }));
+    setLeftElement((lEl: any) => ({ ...lEl, stats: leftStats }));
+    setRightElement((rEl: any) => ({ ...rEl, stats: rightStats }));
   };
 
-  const renderStats = (stats) => {
-    return Object.entries(stats).map(([name, info]) => (
+  const renderStats = (stats: object) => {
+    return Object.entries(stats).map(([name, info]: [string, any]) => (
       <div
         key={name}
         data-stat={info.stat ? info.stat : ""}
@@ -96,24 +98,27 @@ export default function Main() {
     ));
   };
 
-  const dropElementHandle = (el) => {
+  const dropElementHandle = (el: SelectedElement) => {
     if (el.position === "left") {
-      setLeftElement();
+      setLeftElement(null);
     } else {
-      setRightElement();
+      setRightElement(null);
     }
     dispatch(toggleElement(el.id, true));
   };
 
-  const calculateAverage = (players) => {
-    const goalsCount = players.reduce((counter, player) => {
-      return counter + player.stats.Goals;
-    }, 0);
+  const calculateAverage = (players: []) => {
+    const goalsCount = players.reduce(
+      (counter: number, player: { stats: { Goals: number } }) => {
+        return counter + player.stats.Goals;
+      },
+      0
+    );
     const average = goalsCount / players.length;
     return +average.toFixed(2);
   };
 
-  const renderCard = (element) => {
+  const renderCard = (element: SelectedElement) => {
     return (
       <div
         className="element-card"
@@ -149,4 +154,6 @@ export default function Main() {
       )}
     </div>
   );
-}
+};
+
+export default Main;

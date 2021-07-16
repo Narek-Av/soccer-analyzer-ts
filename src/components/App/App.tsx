@@ -1,11 +1,12 @@
+import React from "react";
 import { Provider } from "react-redux";
 import store from "../../store";
 import Sidebar from "../Sidebar";
-import Main from "../Main";
+import Main from "../Main/Main";
 
 import "./App.css";
 
-function App() {
+const App: React.FC = () => {
   return (
     <Provider store={store}>
       <div className="app-container">
@@ -14,6 +15,6 @@ function App() {
       </div>
     </Provider>
   );
-}
+};
 
 export default App;

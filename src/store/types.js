@@ -1,1 +1,0 @@
-export const TOOGLE_ELEMENT = "TOOGLE_ELEMENT";
