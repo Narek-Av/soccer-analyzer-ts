@@ -1,5 +1,6 @@
 import dummyLeagues from "../dummyLeagues.json";
-import { ActionTyp, League, Player, Team } from "./types";
+import { League, Player, Team } from "../interfaces/types";
+import { ActionTyp } from "./types";
 
 export interface SoccerState {
   leagues: League[];

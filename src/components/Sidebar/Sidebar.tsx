@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { ReactComponent as DownIcon } from "../../assets/icons/down-icon.svg";
 import { SoccerState } from "../../store/reducer";
-import { League, Player, Team } from "../../store/types";
+import { League, Player, Team } from "../../interfaces/types";
 
 import "./Sidebar.css";
 
@@ -81,7 +81,9 @@ const Sidebar: React.FC = () => {
                             selectType.includes("player") ? " disabled" : ""
                           }`}
                           onDragEnd={handleDragEnd}
-                          draggable={!selected && selectType !== "player"}
+                          draggable={
+                            !selected && !selectType.includes("player")
+                          }
                         >
                           {name}
                         </span>
@@ -97,7 +99,9 @@ const Sidebar: React.FC = () => {
                                 }${
                                   selectType.includes("team") ? " disabled" : ""
                                 }`}
-                                draggable={!selected && selectType !== "team"}
+                                draggable={
+                                  !selected && !selectType.includes("team")
+                                }
                                 onDragStart={(e) =>
                                   handleDragStart(e, { id, name, stats })
                                 }

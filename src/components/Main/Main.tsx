@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toggleElement } from "../../store/actions";
-import { SelectedElement } from "../../store/types";
+import { SelectedElement } from "../../interfaces/types";
 
 import "./Main.css";
 
@@ -40,71 +40,58 @@ const Main: React.FC = () => {
       dispatch(toggleElement(leftElement?.id, true));
       setLeftElement({ ...rightElement, position: "left" });
       setRightElement({ ...droppedElement, position: "right" });
-      compareStatistics(rightElement, droppedElement);
     } else {
       setRightElement({ ...droppedElement, position: "right" });
-      compareStatistics(leftElement, droppedElement);
     }
 
     dispatch(toggleElement(droppedElement.id, false));
   };
 
-  const compareStatistics = (left: SelectedElement, right: SelectedElement) => {
-    let leftStats: any = {},
-      rightStats: any = {};
-    Object.entries(left.stats).map(([lName, lValue]) =>
-      Object.entries(right.stats).map(([rName, rValue]) => {
-        if (lName === rName) {
-          let lInfo: any = lValue;
-          let rInfo: any = rValue;
-          if (typeof lValue === "number") {
-            lInfo = { value: lValue, stat: "" };
-          }
+  const compareStatistics = (val1: number, val2: number) => {
+    if (val1 > val2) {
+      return "big";
+    } else if (val1 < val2) {
+      return "small";
+    } else {
+      return "equal";
+    }
+  };
 
-          if (typeof rValue === "number") {
-            rInfo = { value: rValue, stat: "" };
-          }
-          if (rInfo.value > lInfo.value) {
-            rInfo.stat = "big";
-            lInfo.stat = "small";
-          } else if (rInfo.value < lInfo.value) {
-            rInfo.stat = "small";
-            lInfo.stat = "big";
-          } else {
-            rInfo.stat = "equal";
-            lInfo.stat = "equal";
-          }
+  const renderStats = (element: SelectedElement) => {
+    return (
+      element.stats &&
+      Object.entries(element.stats).map(([name, value]: [string, number]) => {
+        let stat;
+        let selectedStat;
 
-          leftStats[lName] = lInfo;
-          rightStats[rName] = rInfo;
+        if (element.position === "left") {
+          selectedStat = rightElement?.stats;
+        } else {
+          selectedStat = leftElement?.stats;
         }
-        return null;
+        if (typeof selectedStat === "object") {
+          for (const [v, k] of Object.entries(selectedStat)) {
+            if (v === name) {
+              stat = compareStatistics(value, k);
+            }
+          }
+        }
+        return (
+          <div key={name} data-stat={stat} className="card-statistic">
+            {name} : <span>{value}</span>
+          </div>
+        );
       })
     );
-
-    setLeftElement((lEl: any) => ({ ...lEl, stats: leftStats }));
-    setRightElement((rEl: any) => ({ ...rEl, stats: rightStats }));
   };
 
-  const renderStats = (stats: object) => {
-    return Object.entries(stats).map(([name, info]: [string, any]) => (
-      <div
-        key={name}
-        data-stat={info.stat ? info.stat : ""}
-        className="card-statistic"
-      >
-        {name} : <span>{info.value ? info.value : info}</span>
-      </div>
-    ));
-  };
-
-  const dropElementHandle = (el: SelectedElement) => {
-    if (el.position === "left") {
+  const dropElementHandle = (element: SelectedElement) => {
+    if (element.position === "left") {
       setLeftElement(null);
     } else {
       setRightElement(null);
     }
-    dispatch(toggleElement(el.id, true));
+    dispatch(toggleElement(element.id, true));
   };
 
   const calculateAverage = (players: []) => {
@@ -133,7 +120,7 @@ const Main: React.FC = () => {
         </div>
         <div className="card-info">
           <h2 className="card-name">{element.name}</h2>
-          {renderStats(element.stats)}
+          {renderStats(element)}
         </div>
       </div>
     );
