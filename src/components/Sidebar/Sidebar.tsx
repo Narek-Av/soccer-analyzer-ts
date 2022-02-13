@@ -32,6 +32,7 @@ const Sidebar: React.FC = () => {
 
   return (
     <div className="sidebar-container">
+      <h1>Change user name</h1>
       <ul className="leagues">
         {leagues.map(({ name, teams, id }: League) => (
           <li key={id} className="leagues-item">
