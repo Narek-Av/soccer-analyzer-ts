@@ -1,10 +1,17 @@
 import React, { FunctionComponent } from 'react';
+import Login from '../Login';
 
 import './User.css';
 
 const User: FunctionComponent = () => {
   return (
-    <div>User Info</div>
+    <div className="user-component">
+      <div className="user-component-header">
+        <span>logo</span>
+        <button>Login</button>
+      </div>
+      <Login />
+    </div>
   )
 }
 
