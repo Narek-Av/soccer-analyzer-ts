@@ -4,6 +4,7 @@ import { BrowserRouter as Router ,Routes, Route } from 'react-router-dom';
 import store from "../../store";
 import Sidebar from "../Sidebar";
 import Main from "../Main/Main";
+import User from "../User";
 
 import "./App.css";
 
@@ -19,7 +20,7 @@ const App: React.FC = () => {
                 <Main />
               </>
             } />
-            <Route path="/user" element={<div>User Info</div>} />
+            <Route path="/user" element={<User />} />
           </Routes>
         </Router>
       </div>
