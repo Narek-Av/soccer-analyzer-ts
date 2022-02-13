@@ -21,6 +21,7 @@ const Sidebar: React.FC = () => {
     setTimeout(() => {
       const target = event.target as HTMLElement;
       target.classList.add("hide");
+      console.log('hello');
     }, 0);
   };
 
